@@ -1,13 +1,12 @@
 package com.algafood.domain.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-@Entity
-@Getter
-@Setter
+@Data
 public class Cozinha {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,18 +14,4 @@ public class Cozinha {
 
     private String nome;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Cozinha cozinha = (Cozinha) o;
-
-        return getId() != null ? getId().equals(cozinha.getId()) : cozinha.getId() == null;
-    }
-
-    @Override
-    public int hashCode() {
-        return getId() != null ? getId().hashCode() : 0;
-    }
 }
