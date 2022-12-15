@@ -19,6 +19,6 @@ public class Permissao {
     private String nome;
 
     @Column(nullable = false)
-    private String descrisao;
+    private String descricao;
 
 }
