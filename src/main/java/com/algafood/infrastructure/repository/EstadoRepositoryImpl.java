@@ -2,6 +2,7 @@ package com.algafood.infrastructure.repository;
 
 import com.algafood.domain.model.Estado;
 import com.algafood.domain.repository.EstadoRepository;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -9,6 +10,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+
+@Repository
 public class EstadoRepositoryImpl implements EstadoRepository {
 
     @PersistenceContext
