@@ -7,6 +7,7 @@ import com.algafood.infrastructure.repository.CozinhaRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,5 +33,14 @@ public class CozinhaController {
     @ResponseStatus(HttpStatus.CREATED)
     public void adicionar(@RequestBody Cozinha cozinha) {
         cozinhaRepository.salvar(cozinha);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Cozinha> update(@RequestBody Cozinha cozinhaAtual, @PathVariable Long id) {
+        Cozinha cozinhaEditada = cozinhaRepository.update(cozinhaAtual, id);
+        if (cozinhaEditada != null) {
+            return ResponseEntity.ok(cozinhaEditada);
+        }
+        return ResponseEntity.notFound().build();
     }
 }
