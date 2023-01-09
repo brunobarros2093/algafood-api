@@ -3,6 +3,7 @@ package com.algafood.api.controller;
 
 import com.algafood.domain.model.Cozinha;
 import com.algafood.domain.repository.CozinhaRepository;
+import com.algafood.domain.service.CadastroCozinhaService;
 import com.algafood.infrastructure.repository.CozinhaRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,9 @@ public class CozinhaController {
     @Autowired
     private CozinhaRepositoryImpl cozinhaRepository;
 
+    @Autowired
+    private CadastroCozinhaService cozinhaService;
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Cozinha> listar() {
         return cozinhaRepository.listar();
@@ -32,7 +36,7 @@ public class CozinhaController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void adicionar(@RequestBody Cozinha cozinha) {
-        cozinhaRepository.salvar(cozinha);
+        cozinhaService.salvar(cozinha);
     }
 
     @PutMapping("/{id}")
