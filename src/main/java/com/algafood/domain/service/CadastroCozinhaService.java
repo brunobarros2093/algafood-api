@@ -15,4 +15,10 @@ public class CadastroCozinhaService {
         return cozinhaRepository.salvar(cozinha);
     }
 
+    public void remover(Cozinha cozinha) {
+        // busca cozinha, se existir deleta
+        cozinhaRepository.remover(cozinha);
+
+    }
+
 }
