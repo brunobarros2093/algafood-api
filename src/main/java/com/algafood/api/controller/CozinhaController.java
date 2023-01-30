@@ -2,7 +2,6 @@ package com.algafood.api.controller;
 
 
 import com.algafood.domain.model.Cozinha;
-import com.algafood.domain.repository.CozinhaRepository;
 import com.algafood.domain.service.CadastroCozinhaService;
 import com.algafood.infrastructure.repository.CozinhaRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +22,8 @@ public class CozinhaController {
     @Autowired
     private CadastroCozinhaService cozinhaService;
 
+
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Cozinha> listar() {
         return cozinhaRepository.listar();
@@ -35,8 +36,8 @@ public class CozinhaController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void adicionar(@RequestBody Cozinha cozinha) {
-        cozinhaService.salvar(cozinha);
+    public Cozinha adicionar(@RequestBody Cozinha cozinha) {
+        return cozinhaService.salvar(cozinha);
     }
 
     @PutMapping("/{id}")
@@ -49,9 +50,9 @@ public class CozinhaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Cozinha> delete(@PathVariable Long id){
+    public ResponseEntity<Cozinha> delete(@PathVariable Long id) {
         Cozinha cozinha = buscar(id);
-        if (cozinha != null ) {
+        if (cozinha != null) {
             cozinhaRepository.remover(cozinha);
             ResponseEntity.ok().build();
         }
