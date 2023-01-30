@@ -32,6 +32,7 @@ public class CozinhaRepositoryImpl implements CozinhaRepository {
     @Transactional
     @Override
     public void remover(Cozinha cozinha) {
+        // TODO sera refatorado
         cozinha = buscar(cozinha.getId());
         entityManager.remove(cozinha);
     }
