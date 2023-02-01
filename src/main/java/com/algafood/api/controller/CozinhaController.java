@@ -1,8 +1,10 @@
 package com.algafood.api.controller;
 
 
+import com.algafood.domain.exceptions.EntidadeNaoEncontradaException;
 import com.algafood.domain.model.Cozinha;
 import com.algafood.domain.service.CadastroCozinhaService;
+import com.algafood.domain.exceptions.EntidadeEmUsoException;
 import com.algafood.infrastructure.repository.CozinhaRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,7 +23,6 @@ public class CozinhaController {
 
     @Autowired
     private CadastroCozinhaService cozinhaService;
-
 
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -51,11 +52,13 @@ public class CozinhaController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Cozinha> delete(@PathVariable Long id) {
-        Cozinha cozinha = buscar(id);
-        if (cozinha != null) {
-            cozinhaService.remover(cozinha);
-            ResponseEntity.ok().build();
+        try {
+            cozinhaService.excluir(id);
+            return ResponseEntity.noContent().build();
+        } catch (EntidadeEmUsoException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        } catch (EntidadeNaoEncontradaException e) {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
     }
 }

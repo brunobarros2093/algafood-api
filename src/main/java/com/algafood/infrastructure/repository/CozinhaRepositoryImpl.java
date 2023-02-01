@@ -4,6 +4,7 @@ import com.algafood.domain.model.Cozinha;
 import com.algafood.domain.repository.CozinhaRepository;
 import com.fasterxml.jackson.databind.util.BeanUtil;
 import org.springframework.beans.BeanUtils;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,9 +32,12 @@ public class CozinhaRepositoryImpl implements CozinhaRepository {
 
     @Transactional
     @Override
-    public void remover(Cozinha cozinha) {
+    public void remover(Long id) {
         // TODO sera refatorado
-        cozinha = buscar(cozinha.getId());
+        Cozinha cozinha = buscar(id);
+        if (cozinha == null) {
+            throw new EmptyResultDataAccessException(1);
+        }
         entityManager.remove(cozinha);
     }
 
