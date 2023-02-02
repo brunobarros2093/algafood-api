@@ -14,17 +14,17 @@ public class RestauranteRepositoryImpl implements RestauranteRepository {
     }
 
     @Override
-    public Cozinha buscar(Long id) {
+    public Restaurante buscar(Long id) {
         return null;
     }
 
     @Override
-    public Cozinha salvar(Cozinha cozinha) {
+    public Restaurante salvar(Restaurante restaurante) {
         return null;
     }
 
     @Override
-    public void remover(Cozinha cozinha) {
+    public void remover(Restaurante restaurante) {
 
     }
 }
