@@ -9,7 +9,7 @@ public interface CidadeRepository {
 
     Cidade buscar(Long id);
 
-    Cidade salvar(Cidade cozinha);
+    Cidade salvar(Cidade cidade);
 
-    void remover(Cidade cozinha);
+    void remover(Long id);
 }

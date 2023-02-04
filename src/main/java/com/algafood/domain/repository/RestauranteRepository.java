@@ -2,15 +2,17 @@ package com.algafood.domain.repository;
 
 import com.algafood.domain.model.Cozinha;
 import com.algafood.domain.model.Restaurante;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
 
 public interface RestauranteRepository {
 
     List<Restaurante> listar();
-    Cozinha buscar(Long id);
+    Restaurante buscar(Long id);
 
-    Cozinha salvar(Cozinha cozinha);
+    Restaurante salvar(Restaurante restaurante);
 
-    void remover(Cozinha cozinha);
+    void remover(Restaurante restaurante);
 }
