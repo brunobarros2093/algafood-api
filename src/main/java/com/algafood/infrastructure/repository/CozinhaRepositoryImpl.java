@@ -25,6 +25,11 @@ public class CozinhaRepositoryImpl implements CozinhaRepository {
     }
 
     @Override
+    public List<Cozinha> consultaPorNome(String nome) {
+        return entityManager.createQuery("from Cozinha where nome=:nome", Cozinha.class).setParameter("nome", nome).getResultList();
+    }
+
+    @Override
     public Cozinha buscar(Long id) {
         return entityManager.find(Cozinha.class, id);
     }
