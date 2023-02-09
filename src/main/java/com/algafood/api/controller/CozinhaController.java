@@ -3,9 +3,9 @@ package com.algafood.api.controller;
 
 import com.algafood.domain.exceptions.EntidadeNaoEncontradaException;
 import com.algafood.domain.model.Cozinha;
+import com.algafood.domain.repository.CozinhaRepository;
 import com.algafood.domain.service.CadastroCozinhaService;
 import com.algafood.domain.exceptions.EntidadeEmUsoException;
-import com.algafood.infrastructure.repository.CozinhaRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,7 +19,7 @@ import java.util.List;
 public class CozinhaController {
 
     @Autowired
-    private CozinhaRepositoryImpl cozinhaRepository;
+    private CozinhaRepository cozinhaRepository;
 
     @Autowired
     private CadastroCozinhaService cozinhaService;
@@ -27,12 +27,12 @@ public class CozinhaController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Cozinha> listar() {
-        return cozinhaRepository.listar();
+        return cozinhaRepository.findAll();
     }
 
     @GetMapping("/{id}")
     public Cozinha buscar(@PathVariable Long id) {
-        return cozinhaRepository.buscar(id);
+        return cozinhaRepository.findById(id).orElse(null);
     }
 
     @PostMapping
