@@ -16,13 +16,13 @@ public class CadastroCozinhaService {
     private CozinhaRepository cozinhaRepository;
 
     public Cozinha salvar(Cozinha cozinha) {
-        return cozinhaRepository.salvar(cozinha);
+        return cozinhaRepository.save(cozinha);
     }
 
     public void excluir(Long id) {
         // busca cozinha, se existir deleta
         try {
-            cozinhaRepository.remover(id);
+            cozinhaRepository.deleteById(id);
         } catch (DataIntegrityViolationException e) {
             throw new EntidadeEmUsoException("Cozinha esta em uso. Não pode ser removida: " + e.getMessage());
         } catch(EmptyResultDataAccessException e ){

@@ -6,6 +6,7 @@ import com.algafood.domain.model.Cozinha;
 import com.algafood.domain.repository.CozinhaRepository;
 import com.algafood.domain.service.CadastroCozinhaService;
 import com.algafood.domain.exceptions.EntidadeEmUsoException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/cozinhas")
@@ -31,8 +33,13 @@ public class CozinhaController {
     }
 
     @GetMapping("/{id}")
-    public Cozinha buscar(@PathVariable Long id) {
-        return cozinhaRepository.findById(id).orElse(null);
+    public ResponseEntity<Cozinha> buscar(@PathVariable Long id) {
+        Optional<Cozinha> cozinha = cozinhaRepository.findById(id);
+
+        if (cozinha.isPresent()) {
+            return ResponseEntity.ok(cozinha.get());
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping
@@ -42,10 +49,12 @@ public class CozinhaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Cozinha> update(@RequestBody Cozinha cozinhaAtual, @PathVariable Long id) {
-        Cozinha cozinhaEditada = cozinhaRepository.update(cozinhaAtual, id);
-        if (cozinhaEditada != null) {
-            return ResponseEntity.ok(cozinhaEditada);
+    public ResponseEntity<Cozinha> update(@RequestBody Cozinha cozinha, @PathVariable Long id) {
+        Optional<Cozinha> cozinhaAtual = cozinhaRepository.findById(id);
+        if (cozinhaAtual.isPresent()) {
+            BeanUtils.copyProperties(cozinha, cozinhaAtual.get(), "id");
+            cozinhaAtual = Optional.of(cozinhaRepository.save(cozinha));
+            return ResponseEntity.ok(cozinhaAtual.get());
         }
         return ResponseEntity.notFound().build();
     }
