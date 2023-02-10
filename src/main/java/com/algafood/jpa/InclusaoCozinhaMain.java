@@ -21,8 +21,8 @@ public class InclusaoCozinhaMain {
         cozinha2.setNome("Japonesa");
 
 
-        cc.salvar(cozinha1);
-        cc.salvar(cozinha2);
+        cc.save(cozinha1);
+        cc.save(cozinha2);
 
     }
 }

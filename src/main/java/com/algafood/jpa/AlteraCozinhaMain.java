@@ -18,7 +18,7 @@ public class AlteraCozinhaMain {
         Cozinha cozinha = new Cozinha();
         cozinha.setId(1L);
         cozinha.setNome("Rio grandina");
-        cc.salvar(cozinha);
+        cc.save(cozinha);
 
     }
 }
