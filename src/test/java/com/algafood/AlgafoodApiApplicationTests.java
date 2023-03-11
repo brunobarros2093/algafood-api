@@ -9,5 +9,6 @@ class AlgafoodApiApplicationTests {
 	@Test
 	void contextLoads() {
 	}
+	// TODO: testar
 
 }
