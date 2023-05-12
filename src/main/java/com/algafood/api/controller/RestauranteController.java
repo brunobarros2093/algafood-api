@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import com.algafood.domain.repository.spec.RestauranteComFreteGratisSpec;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ import com.algafood.domain.exceptions.EntidadeNaoEncontradaException;
 import com.algafood.domain.model.Restaurante;
 import com.algafood.domain.repository.RestauranteRepository;
 import com.algafood.domain.service.CadastroRestauranteService;
+
+import static com.algafood.domain.repository.spec.RestauranteSpecs.comFreteGratis;
+import static com.algafood.domain.repository.spec.RestauranteSpecs.comNomeSemelhante;
 
 @RestController
 @RequestMapping(value = "/restaurantes")
@@ -90,6 +94,12 @@ public class RestauranteController {
         merge(campos, restauranteAtual.get());
         return atualizar(id, restauranteAtual.get());
 
+    }
+    // uso do Specification para pesquisar/buscar
+    @GetMapping("/com-frete-gratis")
+    public List<Restaurante> restaurantesComFreteGratis(String nome) {
+        var comFreteGratis = new RestauranteComFreteGratisSpec();
+        return restauranteRepository.findAll(comFreteGratis().and(comNomeSemelhante(nome)));
     }
 
     private static void merge(Map<String, Object> dadosOrigem, Restaurante restauranteDestino) {
