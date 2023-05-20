@@ -1,12 +1,12 @@
 package com.algafood.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -22,5 +22,10 @@ public class Cozinha {
     //    @JsonProperty("titulo") -- tem precedencia
 //    @JsonIgnore
     private String nome;
+
+    // 1 cozinha - N restaurantes
+    @JsonIgnore // para evitar mapeamento ciclico
+    @OneToMany(mappedBy = "cozinha")
+    private List<Restaurante> restaurantes = new ArrayList<>();
 
 }
