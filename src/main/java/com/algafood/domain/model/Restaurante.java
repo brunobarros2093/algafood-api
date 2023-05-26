@@ -45,6 +45,7 @@ public class Restaurante {
     private LocalDateTime dataCadastro;
 
     @UpdateTimestamp
+    @JsonIgnore
     @Column (nullable = false, columnDefinition = "datetime")
     private LocalDateTime atualizacaoCadastro;
 
