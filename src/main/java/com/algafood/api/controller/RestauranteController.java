@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import com.algafood.domain.repository.spec.RestauranteComFreteGratisSpec;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,13 +59,14 @@ public class RestauranteController {
         try {
             restaurante = cadastroRestauranteService.salvar(restaurante);
             return ResponseEntity.status(HttpStatus.CREATED).body(restaurante);
-        }catch (EntidadeNaoEncontradaException e) {
+        } catch (EntidadeNaoEncontradaException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
     @PutMapping("/{restauranteId}")
     public ResponseEntity<?> atualizar(@PathVariable Long restauranteId,
-                                       @RequestBody Restaurante restaurante) {
+            @RequestBody Restaurante restaurante) {
         try {
             Optional<Restaurante> restauranteAtual = restauranteRepository.findById(restauranteId);
 
@@ -95,10 +95,10 @@ public class RestauranteController {
         return atualizar(id, restauranteAtual.get());
 
     }
+
     // uso do Specification para pesquisar/buscar
     @GetMapping("/com-frete-gratis")
     public List<Restaurante> restaurantesComFreteGratis(String nome) {
-        var comFreteGratis = new RestauranteComFreteGratisSpec();
         return restauranteRepository.findAll(comFreteGratis().and(comNomeSemelhante(nome)));
     }
 

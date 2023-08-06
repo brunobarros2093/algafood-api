@@ -18,9 +18,8 @@ public class Cozinha {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-    //    @JsonProperty("titulo") -- tem precedencia
-//    @JsonIgnore
+    // @JsonProperty("titulo") -- tem precedencia
+    // @JsonIgnore
     private String nome;
 
     // 1 cozinha - N restaurantes
