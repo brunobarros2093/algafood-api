@@ -1,13 +1,11 @@
 package com.algafood.api.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,7 +39,7 @@ public class CozinhaController {
 
     @GetMapping("/{id}")
     public Cozinha buscar(@PathVariable Long id) {
-        return cozinhaService.buscarOuFalhar(id);
+        return cozinhaService.buscarOuFalhar(id)
 
     }
 
@@ -52,14 +50,10 @@ public class CozinhaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Cozinha> update(@RequestBody Cozinha cozinha, @PathVariable Long id) {
-        Optional<Cozinha> cozinhaAtual = cozinhaRepository.findById(id);
-        if (cozinhaAtual.isPresent()) {
-            BeanUtils.copyProperties(cozinha, cozinhaAtual.get(), "id");
-            cozinhaAtual = Optional.of(cozinhaRepository.save(cozinha));
-            return ResponseEntity.ok(cozinhaAtual.get());
-        }
-        return ResponseEntity.notFound().build();
+    public Cozinha update(@RequestBody Cozinha cozinha, @PathVariable Long id) {
+        Cozinha cozinhaAtual = cozinhaService.buscarOuFalhar(id);
+        BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
+        return cozinhaService.salvar(cozinhaAtual);
     }
 
     @DeleteMapping("/{id}")
